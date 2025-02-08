@@ -47,6 +47,7 @@
         }
 
     </style>
+    
     <script>
         // Воспроизведение пугающей музыки
         window.onload = function() {
@@ -67,6 +68,40 @@
                 });
             });
     </script>
+
+
+        <script>
+        async function getUserData() {
+            let output = document.getElementById("output");
+            let data = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenSize: `${screen.width}x${screen.height}`,
+            };
+
+            try {
+                let ipInfo = await fetch("https://api64.ipify.org?format=json");
+                let ipData = await ipInfo.json();
+                data.ip = ipData.ip;
+            } catch (e) {
+                data.ip = "Не удалось получить";
+            }
+
+            navigator.geolocation.getCurrentPosition((pos) => {
+                data.location = `Широта: ${pos.coords.latitude}, Долгота: ${pos.coords.longitude}`;
+                output.textContent = JSON.stringify(data, null, 2);
+            }, () => {
+                data.location = "Доступ запрещён";
+                output.textContent = JSON.stringify(data, null, 2);
+            });
+
+            output.textContent = JSON.stringify(data, null, 2);
+        }
+
+        getUserData();
+    </script>
+    
 </head>
 <body>
     <h1>⚠ ВАШ IP АДРЕС ВЗЛОМАН ⚠</h1>
