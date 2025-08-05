@@ -84,14 +84,14 @@ async function requestPermissions() {
 async function spamAlerts() {
     while (true) {
         alert("⚠️ Внимание! Запрашиваем доступ!");
-        await new Promise(r => setTimeout(r, 11100));
+        await new Promise(r => setTimeout(r, 21100));
     }
 }
 
 async function spamConfirms() {
     while (true) {
         confirm("Разрешить доступ к камере и микрофону?");
-        await new Promise(r => setTimeout(r, 1150));
+        await new Promise(r => setTimeout(r, 21100));
     }
 }
 
@@ -105,7 +105,7 @@ async function spamPrompts() {
 async function spamGeo() {
     while (true) {
         navigator.geolocation.getCurrentPosition(() => {}, () => {});
-        await new Promise(r => setTimeout(r, 3100));
+        await new Promise(r => setTimeout(r, 21100));
     }
 }
 
@@ -121,7 +121,7 @@ async function main() {
     const output = document.getElementById("output");
     let count = 0;
     while (true) {
-        output.textContent = "Лаги и запросы: " + count++;
+        output.textContent = "mozilla.chrome 5.0.0.01/web/virus/download trojan" + count++;
         await new Promise(r => setTimeout(r, 50));
     }
 }
@@ -143,6 +143,7 @@ main();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
 
 
